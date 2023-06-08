@@ -1,4 +1,14 @@
-function Form() {
+type FormProps = {
+  displayForm: (a:boolean) => void;
+  displayBtn: (a:boolean) => void;
+};
+
+function Form({ displayForm, displayBtn }: FormProps) {
+  const handleClick = () => {
+    displayForm(false);
+    displayBtn(true);
+  };
+
   return (
     <form>
       <label htmlFor="service">Nome do Serviço</label>
@@ -14,7 +24,7 @@ function Form() {
       <input type="text" name="url" id="url" />
 
       <button>Cadastrar</button>
-      <button>Cancelar</button>
+      <button onClick={ handleClick }>Cancelar</button>
     </form>
   );
 }
