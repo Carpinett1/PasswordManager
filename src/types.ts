@@ -9,3 +9,10 @@ export type FormData = {
   senha: string;
   url: string;
 };
+
+export type Validation = {
+  valid1: string;
+  valid2: string;
+  valid3: string;
+  valid4: string;
+};
