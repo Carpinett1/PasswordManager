@@ -13,6 +13,11 @@ function Form({ displayForm, displayBtn }: FormProps) {
   const valid = 'valid-password-check';
   const invalid = 'invalid-password-check';
 
+  const minimo8CaracteresRegex = /^.{8,}$/;
+  const maximo16CaracteresRegex = /^.{1,16}$/;
+  const letrasENumerosRegex = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
+  const caractereEspecialRegex = /^(?=.*[@$!%*?&]).+$/;
+
   const [validation, setValidation] = useState<Validation>({
     valid1: invalid,
     valid2: invalid,
@@ -20,43 +25,35 @@ function Form({ displayForm, displayBtn }: FormProps) {
     valid4: invalid,
   });
 
+  const handlepassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setData({
+      ...data,
+      senha: e.target.value,
+    });
+    const senha = e.target.value;
+    const req1 = senha.length >= 8;
+    const req2 = senha.length > 0 && senha.length <= 16;
+    const req3 = letrasENumerosRegex.test(senha);
+    const req4 = caractereEspecialRegex.test(senha);
+    setValidation({
+      valid1: req1 ? valid : invalid,
+      valid2: req2 ? valid : invalid,
+      valid3: req3 ? valid : invalid,
+      valid4: req4 ? valid : invalid,
+    });
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({
       ...data,
       [e.target.name]: e.target.value,
     });
-    if (e.target.name === 'senha') {
-      // (minimo8CaracteresRegex.test(e.target.value))
-      //   ? (setValidation({ ...validation, valid1: valid }))
-      //   : (setValidation({ ...validation, valid1: invalid }));
-      // if (maximo16CaracteresRegex.test(e.target.value)) {
-      //   setValidation({ ...validation, valid2: valid });
-      // }
-      // if (!maximo16CaracteresRegex.test(e.target.value)) {
-      //   setValidation({ ...validation, valid2: invalid });
-      // }
-      // if (letrasENumerosRegex.test(e.target.value)) {
-      //   setValidation({ ...validation, valid3: valid });
-      // } else {
-      //   setValidation({ ...validation, valid3: invalid });
-      // }
-      // if (caractereEspecialRegex.test(e.target.value)) {
-      //   setValidation({ ...validation, valid4: valid });
-      // } else {
-      //   setValidation({ ...validation, valid4: invalid });
-      // }
-    }
   };
 
   const handleCancel = () => {
     displayForm(false);
     displayBtn(true);
   };
-
-  const minimo8CaracteresRegex = /^.{8,}$/;
-  const maximo16CaracteresRegex = /^.{1,16}$/;
-  const letrasENumerosRegex = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
-  const caractereEspecialRegex = /^(?=.*[@$!%*?&]).+$/;
 
   const validateForm = () => {
     const service = data.service.length > 0;
@@ -78,7 +75,7 @@ function Form({ displayForm, displayBtn }: FormProps) {
         <input type="text" name="login" id="login" onChange={ handleChange } />
 
         <label htmlFor="senha">Senha</label>
-        <input type="password" name="senha" id="senha" onChange={ handleChange } />
+        <input type="password" name="senha" id="senha" onChange={ handlepassword } />
 
         <label htmlFor="url">URL</label>
         <input type="text" name="url" id="url" onChange={ handleChange } />
