@@ -67,7 +67,7 @@ function Form({ displayForm, handleSubmit }: FormProps) {
   };
 
   return (
-    <>
+    <section className="form-container">
       <form onSubmit={ onSubmit }>
         <label htmlFor="service">Nome do Serviço</label>
         <input type="text" name="service" id="service" onChange={ handleChange } />
@@ -81,17 +81,19 @@ function Form({ displayForm, handleSubmit }: FormProps) {
         <label htmlFor="url">URL</label>
         <input type="text" name="url" id="url" onChange={ handleChange } />
 
-        <button type="submit" disabled={ !validateForm() }>Cadastrar</button>
-        <button onClick={ () => displayForm(false) }>Cancelar</button>
+        <div className="form-btns">
+          <button type="submit" disabled={ !validateForm() }>Cadastrar</button>
+          <button onClick={ () => displayForm(false) }>Cancelar</button>
+        </div>
       </form>
-      <section>
+      <section className="requirements">
         <p>Sua senha deve conter os seguintes requisitos:</p>
         <p className={ validation.valid1 }>Possuir 8 ou mais caracteres</p>
         <p className={ validation.valid2 }>Possuir até 16 caracteres</p>
         <p className={ validation.valid3 }>Possuir letras e números</p>
         <p className={ validation.valid4 }>Possuir algum caractere especial</p>
       </section>
-    </>
+    </section>
   );
 }
 

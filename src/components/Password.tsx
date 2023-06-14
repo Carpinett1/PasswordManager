@@ -4,17 +4,19 @@ function Password({ formData, handleDelete, hidePassword }: PasswordProps) {
   const { service, login, senha, url, id } = formData;
 
   return (
-    <div>
+    <div className="psw-card">
       <a href={ url } target="_blank" rel="noreferrer">{ service }</a>
+      <hr />
       <p>
         Login
       </p>
-      <span>{login}</span>
+      <p className="data">{login}</p>
       <p>
         Senha
       </p>
-      <span>{hidePassword ? '******' : senha}</span>
+      <p className="data">{hidePassword ? '******' : senha}</p>
       <button
+        className="delete"
         data-testid="remove-btn"
         onClick={ () => handleDelete(id) }
       >

@@ -18,16 +18,18 @@ function App() {
     setPasswordList(passwordList.filter((password) => password.id !== id));
   };
 
+  const onClick = () => setDisplayForm(true);
+
   return (
     <>
       <main>
         <h1>Gerenciador de senhas</h1>
         {!displayForm
-          && <button onClick={ () => setDisplayForm(true) }>Cadastrar nova senha</button>}
+          && <button className="btn" onClick={ onClick }>Cadastrar nova senha</button>}
         {displayForm
           && <Form displayForm={ setDisplayForm } handleSubmit={ addPassword } />}
       </main>
-      <section>
+      <section className="password-container">
         {passwordList.length === 0
           ? (
             <div>
@@ -35,7 +37,7 @@ function App() {
             </div>
           )
           : (
-            <div>
+            <div className="inner-container">
               <label htmlFor="show-password">
                 Esconder Senhas
                 <input
@@ -44,15 +46,16 @@ function App() {
                   onChange={ () => setHidePassword(!hidePassword) }
                 />
               </label>
-
-              {passwordList.map((elem) => (
-                <Password
-                  key={ elem.id }
-                  formData={ elem }
-                  handleDelete={ handleDelete }
-                  hidePassword={ hidePassword }
-                />
-              ))}
+              <div className="psw-card-cont">
+                {passwordList.map((elem) => (
+                  <Password
+                    key={ elem.id }
+                    formData={ elem }
+                    handleDelete={ handleDelete }
+                    hidePassword={ hidePassword }
+                  />
+                ))}
+              </div>
             </div>
           ) }
       </section>
