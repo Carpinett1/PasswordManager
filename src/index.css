@@ -136,3 +136,9 @@ form input {
   color: rgb(179, 179, 179);
   font-weight: 300;
 }
+
+.view-btn {
+  background: none;
+  border: none;
+  color: white;
+}

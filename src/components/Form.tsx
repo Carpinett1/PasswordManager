@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import Swal from 'sweetalert2';
+import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 
 import { FormProps, FormData, Validation } from '../types';
 
@@ -68,6 +69,8 @@ function Form({ displayForm, handleSubmit }: FormProps) {
     displayForm(false);
   };
 
+  const [showPassword, setShowPassword] = useState<'password' | 'text'>('password');
+
   return (
     <section className="form-container">
       <form onSubmit={ onSubmit }>
@@ -77,8 +80,24 @@ function Form({ displayForm, handleSubmit }: FormProps) {
         <label htmlFor="login">Login</label>
         <input type="text" name="login" id="login" onChange={ handleChange } />
 
-        <label htmlFor="senha">Senha</label>
-        <input type="password" name="senha" id="senha" onChange={ handlepassword } />
+        <div>
+          <label htmlFor="senha">Senha</label>
+          <button
+            className="view-btn"
+            data-testid="show-hide-form-password"
+            type="button"
+            onClick={ () => (showPassword === 'password'
+              ? setShowPassword('text') : setShowPassword('password')) }
+          >
+            { showPassword === 'text' ? <AiFillEyeInvisible /> : <AiFillEye /> }
+          </button>
+        </div>
+        <input
+          type={ showPassword }
+          name="senha"
+          id="senha"
+          onChange={ handlepassword }
+        />
 
         <label htmlFor="url">URL</label>
         <input type="text" name="url" id="url" onChange={ handleChange } />
