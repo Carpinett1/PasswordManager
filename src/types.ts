@@ -1,6 +1,6 @@
 export type FormProps = {
   displayForm: (a:boolean) => void;
-  displayBtn: (a:boolean) => void;
+  handleSubmit: (formInfo: FormData) => void
 };
 
 export type FormData = {
@@ -15,4 +15,18 @@ export type Validation = {
   valid2: string;
   valid3: string;
   valid4: string;
+};
+
+export type FormAndId = {
+  service: string,
+  login: string,
+  senha: string,
+  url: string,
+  id: number,
+};
+
+export type PasswordProps = {
+  formData: FormAndId;
+  handleDelete: (id: number) => void;
+  hidePassword: boolean;
 };

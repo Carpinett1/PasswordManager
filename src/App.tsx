@@ -1,26 +1,62 @@
 import { useState } from 'react';
 import './App.css';
 import Form from './components/Form';
+import Password from './components/Password';
+import { FormData, FormAndId } from './types';
 
 function App() {
   const [displayForm, setDisplayForm] = useState(false);
-  const [displayBtn, setDisplayBtn] = useState(true);
+  const [passwordList, setPasswordList] = useState<FormAndId[]>([]);
+  const [hidePassword, setHidePassword] = useState(false);
 
-  const handleClick = () => {
-    setDisplayForm(true);
-    setDisplayBtn(false);
+  const addPassword = (formInfo: FormData) => {
+    const passwordAndId = { ...formInfo, id: Date.now() };
+    setPasswordList([...passwordList, passwordAndId]);
+  };
+
+  const handleDelete = (id: number) => {
+    setPasswordList(passwordList.filter((password) => password.id !== id));
   };
 
   return (
-    <main>
-      <h1>Gerenciador de senhas</h1>
-      {displayBtn
-      && <button onClick={ handleClick }>Cadastrar nova senha</button>}
-      {displayForm && <Form
-        displayForm={ setDisplayForm }
-        displayBtn={ setDisplayBtn }
-      />}
-    </main>
+    <>
+      <main>
+        <h1>Gerenciador de senhas</h1>
+        {!displayForm
+          && <button onClick={ () => setDisplayForm(true) }>Cadastrar nova senha</button>}
+        {displayForm
+          && <Form displayForm={ setDisplayForm } handleSubmit={ addPassword } />}
+      </main>
+      <section>
+        {passwordList.length === 0
+          ? (
+            <div>
+              <h2>Nenhuma Senha Cadastrada</h2>
+            </div>
+          )
+          : (
+            <div>
+              <label htmlFor="show-password">
+                Esconder Senhas
+                <input
+                  type="checkbox"
+                  id="show-password"
+                  onChange={ () => setHidePassword(!hidePassword) }
+                />
+              </label>
+
+              {passwordList.map((elem) => (
+                <Password
+                  key={ elem.id }
+                  formData={ elem }
+                  handleDelete={ handleDelete }
+                  hidePassword={ hidePassword }
+                />
+              ))}
+            </div>
+          ) }
+      </section>
+    </>
   );
 }
 

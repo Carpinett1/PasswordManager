@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { FormProps, FormData, Validation } from '../types';
 
-function Form({ displayForm, displayBtn }: FormProps) {
+function Form({ displayForm, handleSubmit }: FormProps) {
   const [data, setData] = useState<FormData>({
     service: '',
     login: '',
@@ -50,11 +50,6 @@ function Form({ displayForm, displayBtn }: FormProps) {
     });
   };
 
-  const handleCancel = () => {
-    displayForm(false);
-    displayBtn(true);
-  };
-
   const validateForm = () => {
     const service = data.service.length > 0;
     const login = data.login.length > 0;
@@ -65,9 +60,15 @@ function Form({ displayForm, displayBtn }: FormProps) {
     return service && login && senha;
   };
 
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleSubmit(data);
+    displayForm(false);
+  };
+
   return (
     <>
-      <form>
+      <form onSubmit={ onSubmit }>
         <label htmlFor="service">Nome do Serviço</label>
         <input type="text" name="service" id="service" onChange={ handleChange } />
 
@@ -81,7 +82,7 @@ function Form({ displayForm, displayBtn }: FormProps) {
         <input type="text" name="url" id="url" onChange={ handleChange } />
 
         <button type="submit" disabled={ !validateForm() }>Cadastrar</button>
-        <button onClick={ handleCancel }>Cancelar</button>
+        <button onClick={ () => displayForm(false) }>Cancelar</button>
       </form>
       <section>
         <p>Sua senha deve conter os seguintes requisitos:</p>
