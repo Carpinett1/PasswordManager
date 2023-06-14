@@ -32,8 +32,10 @@ function App() {
       <section className="password-container">
         {passwordList.length === 0
           ? (
-            <div>
+            <div className="nopswd">
+              <hr />
               <h2>Nenhuma Senha Cadastrada</h2>
+              <hr />
             </div>
           )
           : (

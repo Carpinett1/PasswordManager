@@ -127,3 +127,12 @@ form input {
 .delete:hover {
   color: red;
 }
+
+.nopswd {
+  margin-top: 100px;
+}
+
+.nopswd h2 {
+  color: rgb(179, 179, 179);
+  font-weight: 300;
+}

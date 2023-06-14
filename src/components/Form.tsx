@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import Swal from 'sweetalert2';
+
 import { FormProps, FormData, Validation } from '../types';
 
 function Form({ displayForm, handleSubmit }: FormProps) {
@@ -82,7 +84,18 @@ function Form({ displayForm, handleSubmit }: FormProps) {
         <input type="text" name="url" id="url" onChange={ handleChange } />
 
         <div className="form-btns">
-          <button type="submit" disabled={ !validateForm() }>Cadastrar</button>
+          <button
+            type="submit"
+            disabled={ !validateForm() }
+            onClick={ () => Swal.fire({
+              icon: 'success',
+              title: 'Serviço cadastrado com sucesso',
+              showConfirmButton: false,
+              timer: 1500,
+            }) }
+          >
+            Cadastrar
+          </button>
           <button onClick={ () => displayForm(false) }>Cancelar</button>
         </div>
       </form>
